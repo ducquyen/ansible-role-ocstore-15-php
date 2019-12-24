@@ -1,0 +1,16 @@
+- name: Ensure packages are installed
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
+    name:
+      - php5
+      - php5-cli
+      - php5-curl
+      - php5-gd
+      - php5-json
+      - php5-ldap
+      - php5-mcrypt
+      - php5-mysql
+      - git
+      - python-passlib
+    state: present

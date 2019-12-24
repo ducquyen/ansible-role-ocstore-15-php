@@ -1,0 +1,25 @@
+- name: Check if mcrypt is enabled
+  stat:
+    path: /etc/php5/apache2/conf.d/20-mcrypt.ini
+  register: mcrypt_conf
+
+- name: Enable mcrypt
+  command: php5enmod mcrypt
+  when: mcrypt_conf.stat.exists == false
+  notify: restart apache
+
+- name: Ensure php.ini settings is set
+  ini_file:
+    path: /etc/php5/apache2/php.ini
+    section: PHP
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { option: "post_max_size", value: "128M" }
+    - { option: "upload_max_filesize", value: "128M" }
+    - { option: "display_errors", value: "Off" }
+    - { option: "display_startup_errors", value: "Off" }
+    - { option: "html_errors", value: "On" }
+    - { option: "log_errors", value: "On" }
+    - { option: "error_reporting", value: "E_ALL & ~E_DEPRECATED & ~E_STRICT" }
+  notify: restart apache
