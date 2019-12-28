@@ -17,6 +17,7 @@
   with_items:
     - { option: "post_max_size", value: "128M" }
     - { option: "upload_max_filesize", value: "128M" }
+    - { option: "max_execution_time", value: "300" }
     - { option: "display_errors", value: "Off" }
     - { option: "display_startup_errors", value: "Off" }
     - { option: "html_errors", value: "On" }
